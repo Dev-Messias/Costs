@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './ProjectForm.module.css';
 import Input from '../form/Input';
 import Select from '../form/Select';
 import SubmitButton from '../form/SubmitButton';
 
 function ProjectForm({btnText}){
+
+    const  [categories, setCategories] = useState([]);
+    
+    useEffect(() => {
+        //url da api 
+        fetch("http://localhost:5000/categories", {
+            method: "GET",
+            headers: {
+                //receber json
+                'Content-Type': 'application/json'
+            }
+        })
+        //transformando a resposta em json
+        .then((resp) => resp.json())
+        //setando dados na constante 
+        .then((data) => {
+            setCategories(data)
+        })
+        .catch((err) => console.log(err))
+    }, [])
+
     return(
         <form className={styles.form} >
             <Input 
@@ -22,6 +43,7 @@ function ProjectForm({btnText}){
             <Select 
                 name="category_id"
                 text="Selecione a categoria"
+                options={categories}
             />
             <SubmitButton text={btnText} />
         </form>
