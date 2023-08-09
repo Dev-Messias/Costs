@@ -9,6 +9,12 @@ function ProjectCard({id, name, budget, category, handleRemove}){
     var numb = Number(budget)
     const budgetConvert = numb.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+    //metodo para remover
+    const remove = (e) => {
+        e.preventDefault()
+        handleRemove(id)
+    }
+
     return(
         <div className={styles.project_card} >
             <h4>{name}</h4>
@@ -22,7 +28,7 @@ function ProjectCard({id, name, budget, category, handleRemove}){
                 <Link to="#">
                     <BsPencil /> Editar
                 </Link>
-                <button>
+                <button onClick={remove} >
                     <BsFillTrashFill /> Excluir
                 </button>
             </div>
